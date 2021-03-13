@@ -1,0 +1,45 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <h2>Login to admin panel</h2>
+
+  <div class="form-control"
+       [ngClass]="{invalid: form.controls['email'].touched && form.controls['email'].invalid}">
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email">
+    <div class="validation"
+         *ngIf="form.controls['email'].touched && form.controls['email'].invalid">
+
+      <small *ngIf="form.controls['email'].hasError('required')">
+        This field cannot be empty
+      </small>
+      <small *ngIf="form.controls['email'].hasError('email')">
+        Incorrect email
+      </small>
+
+    </div>
+  </div>
+
+  <div class="form-control"
+       [ngClass]="{invalid: form.controls['password'].touched && form.controls['password'].invalid}">
+    <label for="password">Password:</label>
+    <input type="password" id="password" formControlName="password">
+    <div class="validation"
+         *ngIf="form.controls['password'].touched && form.controls['password'].invalid">
+
+      <small *ngIf="form.controls['password'].hasError('required')">
+        This field cannot be empty
+      </small>
+      <small *ngIf="form.controls['password'].hasError('minlength')">
+        Password must be at least {{minLength}} symbol.
+      </small>
+
+    </div>
+  </div>
+
+  <button type="submit"
+          class="btn btn-primary"
+          >
+
+    Log in
+  </button>
+
+</form>
