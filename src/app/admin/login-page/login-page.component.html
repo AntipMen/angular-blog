@@ -1,6 +1,14 @@
 <form class="card" [formGroup]="form" (ngSubmit)="submit()">
   <h2>Login to admin panel</h2>
 
+  <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+    {{error}}
+  </div>
+
+  <div class="alert alert-info" *ngIf="message">
+    {{message}}
+  </div>
+
   <div class="form-control"
        [ngClass]="{invalid: form.controls['email'].touched && form.controls['email'].invalid}">
     <label for="email">Email:</label>
@@ -9,10 +17,10 @@
          *ngIf="form.controls['email'].touched && form.controls['email'].invalid">
 
       <small *ngIf="form.controls['email'].hasError('required')">
-        This field cannot be empty
+        This field cannot be empty.
       </small>
       <small *ngIf="form.controls['email'].hasError('email')">
-        Incorrect email
+        Incorrect email.
       </small>
 
     </div>
@@ -26,7 +34,7 @@
          *ngIf="form.controls['password'].touched && form.controls['password'].invalid">
 
       <small *ngIf="form.controls['password'].hasError('required')">
-        This field cannot be empty
+        This field cannot be empty.
       </small>
       <small *ngIf="form.controls['password'].hasError('minlength')">
         Password must be at least {{minLength}} symbol.
@@ -37,8 +45,7 @@
 
   <button type="submit"
           class="btn btn-primary"
-          >
-
+          [disabled]="form.invalid || submitted">
     Log in
   </button>
 
