@@ -6,7 +6,9 @@ import {catchError, tap} from 'rxjs/operators';
 import {FbAuthResponse, User} from '../../../shared/interfaces';
 import {environment} from '../../../../environments/environment';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 
 export class AuthService {
 
@@ -41,7 +43,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-   if (this.token !== 'null') {
+    if (this.token !== 'null') {
       return true;
     } else {
       return false;
