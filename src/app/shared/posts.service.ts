@@ -26,4 +26,43 @@ export class PostsService {
         })
       );
   }
+
+  getAllPosts(): Observable<Post[]> {
+    return this.http.get(`${environment.fbDatabaseUrl}/posts.json`)
+      .pipe(
+        map((response: { [key: string]: any }) => {
+          return Object
+            .keys(response)
+            .map(key => ({
+              ...response[key],
+              id: key,
+              date: new Date(response[key].date)
+            }));
+          return [];
+        })
+      );
+  }
+
+  getById(id: string): Observable<Post> {
+    return this.http.get<Post>(`${environment.fbDatabaseUrl}/posts/${id}.json`)
+      .pipe(
+        //@ts-ignore
+        map((post: Post) => {
+          return {
+            ...post,
+            id,
+            date: new Date(post.date)
+          };
+        })
+      );
+  }
+
+  remove(id: string | undefined): Observable<void> {
+    return this.http.delete<void>(`${environment.fbDatabaseUrl}/posts/${id}.json`);
+  }
+
+  updatePost(post: Post): Observable<Post> {
+    return this.http.patch<Post>(`${environment.fbDatabaseUrl}/posts/${post.id}.json`, post);
+  }
+
 }
